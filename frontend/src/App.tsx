@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Play, Settings, Image, Video, Users } from "lucide-react";
+import { Play, Settings as SettingsIcon, Image, Video, Users } from "lucide-react";
 import { invoke } from "@tauri-apps/api/core";
+import Settings from "./Settings";
+
+type View = "splash" | "settings";
 
 function App() {
+  const [view, setView] = useState<View>("splash");
   const [status, setStatus] = useState<"idle" | "starting" | "running" | "error">("idle");
   const [statusMessage, setStatusMessage] = useState("Ready to forge");
 
@@ -20,14 +24,14 @@ function App() {
     }
   }
 
-  // Real Sprint 0 sidecar launch (Rust)
+  // Launch sidecar — now respects whatever the user saved in Settings
   async function launchComfyUISidecar() {
     setStatus("starting");
-    setStatusMessage("Initializing ComfyUI sidecar...");
+    setStatusMessage("Initializing ComfyUI sidecar (using your saved paths)...");
     try {
-      const status = await invoke<any>("start_comfyui", { port: 8188 });
+      const result = await invoke<any>("start_comfyui", { port: null });
       setStatus("running");
-      setStatusMessage(status?.message || "ComfyUI sidecar active • http://127.0.0.1:8188");
+      setStatusMessage(result?.message || "ComfyUI sidecar active");
     } catch (e) {
       setStatus("error");
       setStatusMessage("Failed: " + String(e));
@@ -42,6 +46,11 @@ function App() {
     } catch (e) {
       setStatusMessage("Status check failed: " + String(e));
     }
+  }
+
+  // Simple view switcher (we'll evolve this into proper routing later)
+  if (view === "settings") {
+    return <Settings onBack={() => setView("splash")} />;
   }
 
   return (
@@ -62,10 +71,10 @@ function App() {
             <span>{statusMessage}</span>
           </div>
           <button 
-            onClick={() => window.location.reload()} 
-            className="mf-btn-secondary text-xs px-3 py-1"
+            onClick={() => setView("settings")} 
+            className="mf-btn-secondary text-xs px-3 py-1 flex items-center gap-1"
           >
-            <Settings size={14} className="inline mr-1" /> SETTINGS
+            <SettingsIcon size={14} /> SETTINGS
           </button>
         </div>
       </div>
@@ -132,7 +141,7 @@ function App() {
             { icon: <Play size={15} />, label: "Quick Forge" },
             { icon: <Video size={15} />, label: "Video Lab" },
             { icon: <Users size={15} />, label: "Archetypes" },
-            { icon: <Settings size={15} />, label: "Model Manager" },
+            { icon: <SettingsIcon size={15} />, label: "Model Manager" },
           ].map((mode, i) => (
             <div 
               key={i}
@@ -147,7 +156,7 @@ function App() {
       {/* Bottom status bar */}
       <div className="h-12 border-t border-[#2A2A2A] flex items-center px-8 text-xs text-[#A8A29E] justify-between">
         <div>
-          Sprint 0 • Tauri v2 + React 19 + ComfyUI sidecar
+          Sprint 0 + Flexible Sidecar • Any ComfyUI + Any Venv (see Settings)
         </div>
         <div className="flex items-center gap-4">
           <span>100% Local • Private • Uncensored</span>
