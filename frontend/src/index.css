@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ========================================
+   MandingoForge - Luxurious Dark Theme
+   Deep blacks, golds (#C5A46E), blood reds (#8B0000)
+   Premium creative software aesthetic
+   ======================================== */
+
+:root {
+  --mf-black: #0A0A0A;
+  --mf-black-50: #1A1A1A;
+  --mf-black-100: #121212;
+  --mf-gold: #C5A46E;
+  --mf-gold-dark: #A67C4A;
+  --mf-red: #8B0000;
+  --mf-red-dark: #5C0000;
+  --mf-cream: #F5F0E6;
+  --mf-text: #F5F0E6;
+  --mf-text-muted: #A8A29E;
+  --mf-border: #2A2A2A;
+
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background-color: var(--mf-black);
+  color: var(--mf-text);
+  margin: 0;
+  min-height: 100vh;
+}
+
+/* Premium typography */
+h1, h2, h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+/* Elegant buttons and inputs */
+.mf-btn {
+  @apply px-6 py-3 rounded-md font-medium transition-all duration-200;
+  background: linear-gradient(135deg, var(--mf-gold) 0%, var(--mf-gold-dark) 100%);
+  color: var(--mf-black);
+  border: 1px solid var(--mf-gold);
+}
+
+.mf-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(197, 164, 110, 0.3);
+}
+
+.mf-btn-secondary {
+  @apply px-6 py-3 rounded-md font-medium transition-all duration-200;
+  background-color: transparent;
+  color: var(--mf-gold);
+  border: 1px solid var(--mf-gold);
+}
+
+.mf-btn-secondary:hover {
+  background-color: rgba(197, 164, 110, 0.1);
+}
+
+.mf-input {
+  @apply px-4 py-3 rounded-md bg-[var(--mf-black-50)] border border-[var(--mf-border)] text-[var(--mf-text)] placeholder:text-[var(--mf-text-muted)] focus:outline-none focus:border-[var(--mf-gold)] transition-colors;
+}
+
+/* Card / panel styling for pro software feel */
+.mf-card {
+  background-color: var(--mf-black-100);
+  border: 1px solid var(--mf-border);
+  border-radius: 8px;
+}
+
+.mf-panel {
+  background-color: var(--mf-black-50);
+  border-right: 1px solid var(--mf-border);
+}
+
+/* Scrollbar for dark luxury */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--mf-black-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--mf-gold-dark);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mf-gold);
+}
+
+/* Splash / Hero specific */
+.mf-splash {
+  background: 
+    radial-gradient(circle at 30% 20%, rgba(197, 164, 110, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 70% 80%, rgba(139, 0, 0, 0.05) 0%, transparent 60%),
+    var(--mf-black);
+}
+
+/* Status indicators */
+.status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.status-dot.green { background-color: #22c55e; }
+.status-dot.red { background-color: var(--mf-red); }
+.status-dot.gold { background-color: var(--mf-gold); }
