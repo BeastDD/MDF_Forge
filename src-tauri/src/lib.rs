@@ -208,8 +208,8 @@ fn spawn_log_reader<R: std::io::Read + Send + 'static>(reader: R, stream: &'stat
 impl ComfyManager {
     pub fn new() -> Self {
         Self {
-            child: Arc<Mutex<Option<Child>>>,
-            port: Arc<Mutex<u16>>,
+            child: Arc::new(Mutex::new(None)),
+            port: Arc::new(Mutex::new(8188)),
         }
     }
 
